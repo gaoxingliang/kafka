@@ -13,8 +13,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+ScalaCompileOptions.metaClass.daemonServer = true
+ScalaCompileOptions.metaClass.fork = true
+ScalaCompileOptions.metaClass.useAnt = false
+ScalaCompileOptions.metaClass.useCompileDaemon = false
+
 buildscript {
   repositories {
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    maven { url 'https://maven.aliyun.com/repository/google' }
+    maven { url 'https://maven.aliyun.com/repository/jcenter' }
+    mavenLocal()
     mavenCentral()
   }
   apply from: file('gradle/buildscript.gradle'), to: buildscript
