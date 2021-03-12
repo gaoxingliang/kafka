@@ -17,15 +17,19 @@
 package kafka.examples;
 
 
-import java.util.Properties;
 import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Properties;
 
 public class Producer extends Thread
 {
   private final kafka.javaapi.producer.Producer<Integer, String> producer;
   private final String topic;
   private final Properties props = new Properties();
+  private static final Logger log = LoggerFactory.getLogger(Producer.class);
 
   public Producer(String topic)
   {
@@ -43,6 +47,13 @@ public class Producer extends Thread
     {
       String messageStr = new String("Message_" + messageNo);
       producer.send(new KeyedMessage<Integer, String>(topic, messageStr));
+      log.info("Send a message : " + messageStr);
+      try {
+        Thread.sleep(3000);
+      }
+      catch (InterruptedException e) {
+        e.printStackTrace();
+      }
       messageNo++;
     }
   }

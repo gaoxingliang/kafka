@@ -73,6 +73,7 @@ class SocketServer(val brokerId: Int,
                                     quotas,
                                     connectionsMaxIdleMs)
       Utils.newThread("kafka-network-thread-%d-%d".format(port, i), processors(i), false).start()
+      info("!!!!! started processore - " + "kafka-network-thread-%d-%d".format(port, i))
     }
 
     newGauge("ResponsesBeingSent", new Gauge[Int] {
@@ -85,6 +86,7 @@ class SocketServer(val brokerId: Int,
     // start accepting connections
     this.acceptor = new Acceptor(host, port, processors, sendBufferSize, recvBufferSize, quotas)
     Utils.newThread("kafka-socket-acceptor", acceptor, false).start()
+    info("!!!!! Started acceptor - kafka-socket-acceptor")
     acceptor.awaitStartup
     info("Started")
   }
